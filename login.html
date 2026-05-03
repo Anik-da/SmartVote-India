@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SmartVote India</title>
+    <meta name="description" content="Login with your phone number to access SmartVote India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-page {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-light);
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 450px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-container p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .phone-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .country-code {
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+
+        .phone-input-wrapper input,
+        .otp-input-wrapper input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .phone-input-wrapper input:focus,
+        .otp-input-wrapper input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .recaptcha-container {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #error-msg {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            min-height: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">VoteSmart <span>India</span></a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning.html">Learn</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-page">
+        <div class="login-container">
+            <h2>Welcome Back</h2>
+            <p>Sign in using your mobile number.</p>
+
+            <!-- Step 1: Phone Number -->
+            <div id="step-phone">
+                <div class="input-group">
+                    <label for="phone-number">Mobile Number</label>
+                    <div class="phone-input-wrapper">
+                        <div class="country-code">+91</div>
+                        <input type="tel" id="phone-number" placeholder="Enter 10-digit number" maxlength="10">
+                    </div>
+                </div>
+                <div class="recaptcha-container" id="recaptcha-container"></div>
+                <button id="send-otp-btn" class="btn btn-primary btn-block">Send OTP</button>
+            </div>
+
+            <!-- Step 2: OTP Verification -->
+            <div id="step-otp" class="hidden">
+                <div class="input-group">
+                    <label for="otp-code">Enter OTP</label>
+                    <div class="otp-input-wrapper">
+                        <input type="text" id="otp-code" placeholder="6-digit OTP" maxlength="6">
+                    </div>
+                </div>
+                <button id="verify-otp-btn" class="btn btn-secondary btn-block">Verify OTP</button>
+                <button id="back-to-phone" class="btn btn-outline btn-block" style="margin-top: 10px;">Back</button>
+            </div>
+
+            <div id="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="login.js"></script>
+</body>
+</html>

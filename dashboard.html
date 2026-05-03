@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SmartVote India</title>
+    <meta name="description" content="Track your learning progress and achievements on SmartVote India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning.html">Learn</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li id="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <span id="user-name">User</span>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html">Dashboard</a>
+                            <a href="javascript:void(0)" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="container">
+        <!-- Auth Gate: shown when not logged in -->
+        <div id="dashboard-auth-gate" class="dashboard-auth-gate" style="display: none;">
+            <div class="auth-gate-content">
+                <div class="auth-gate-icon">🔒</div>
+                <h2>Sign In to View Your Dashboard</h2>
+                <p>Track your learning progress, earn badges, and see your stats by signing in.</p>
+                <button class="btn btn-primary" id="gate-login-btn">Login / Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="dashboard-loading" class="dashboard-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading your dashboard...</p>
+        </div>
+
+        <!-- Dashboard Main (hidden until auth + data load) -->
+        <div id="dashboard-main" style="display: none;">
+            <!-- Profile Header -->
+            <header class="dash-header">
+                <div class="dash-avatar" id="dash-avatar">V</div>
+                <div class="dash-user-info">
+                    <h1 id="dash-name">Voter</h1>
+                    <p id="dash-email">voter@example.com</p>
+                    <span class="dash-badge" id="dash-badge">🌱 Beginner</span>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="dash-stats">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-progress">📊</div>
+                    <div class="stat-value" id="stat-overall">0%</div>
+                    <div class="stat-label">Overall Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-modules">📚</div>
+                    <div class="stat-value" id="stat-completed">0 / 0</div>
+                    <div class="stat-label">Modules Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-streak">🔥</div>
+                    <div class="stat-value" id="stat-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-rank">🏆</div>
+                    <div class="stat-value" id="stat-rank">—</div>
+                    <div class="stat-label">Your Rank</div>
+                </div>
+            </section>
+
+            <!-- Progress Overview Ring + Module List -->
+            <section class="dash-progress-section">
+                <div class="dash-ring-card">
+                    <h3>Overall Completion</h3>
+                    <div class="progress-ring-container">
+                        <svg class="progress-ring" width="180" height="180">
+                            <circle class="progress-ring-bg" cx="90" cy="90" r="78" />
+                            <circle class="progress-ring-fill" id="ring-fill" cx="90" cy="90" r="78" />
+                        </svg>
+                        <div class="ring-label" id="ring-label">0%</div>
+                    </div>
+                    <p class="ring-subtitle">Keep going — every step counts!</p>
+                </div>
+
+                <div class="dash-modules-card">
+                    <h3>Module Progress</h3>
+                    <div id="module-progress-list" class="module-progress-list">
+                        <!-- Filled dynamically -->
+                    </div>
+                    <a href="learning.html" class="btn btn-primary btn-sm dash-cta">Continue Learning →</a>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="dash-activity-section">
+                <h3>Account Info</h3>
+                <div class="activity-list" id="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-icon">📅</span>
+                        <div class="activity-text">
+                            <strong>Member Since</strong>
+                            <p id="dash-joined">—</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon">✉️</span>
+                        <div class="activity-text">
+                            <strong>Email</strong>
+                            <p id="dash-email-2">—</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <a href="index.html" class="logo">
+                <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
+            </a>
+                    <p>Empowering the next generation of voters with technology and transparency.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Platform</h4>
+                        <ul>
+                            <li><a href="learning.html">Learn</a></li>
+                            <li><a href="#quiz">Quiz</a></li>
+                            <li><a href="#simulator">Simulator</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 VoteSmart India. All rights reserved. Built with pride for democracy.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="dashboard.js"></script>
+</body>
+</html>

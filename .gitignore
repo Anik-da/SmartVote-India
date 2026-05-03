@@ -1,0 +1,16 @@
+
+# Secrets
+config.js
+
+# Environments
+.env
+.env.local
+
+# Temporary files
+scratch/
+.firebase/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

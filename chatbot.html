@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Assistant | SmartVote India</title>
+    <meta name="description" content="Ask our AI-powered Election Assistant anything about Indian elections, voting, and democracy.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="chatbot-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning.html">Learn</a></li>
+                <li><a href="chatbot.html" class="active">AI Assistant</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li id="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <span id="user-name">User</span>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html">Dashboard</a>
+                            <a href="javascript:void(0)" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chat Interface -->
+    <main class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-header">🤖</div>
+                <div>
+                    <h2>Election Assistant</h2>
+                    <p class="chat-status" id="chat-status">Online — Ask me anything about elections</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- Welcome Message -->
+            <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-bubble">
+                    <p>Namaste! 🇮🇳 I'm your <strong>Election Assistant</strong>. I can help you understand:</p>
+                    <ul>
+                        <li>How to register and vote</li>
+                        <li>The election process in India</li>
+                        <li>EVMs, VVPAT, and NOTA</li>
+                        <li>Your rights as a voter</li>
+                    </ul>
+                    <p>Ask me anything!</p>
+                </div>
+                <span class="message-time">Just now</span>
+            </div>
+
+            <!-- Suggested Questions -->
+            <div class="suggested-questions" id="suggested-questions">
+                <button class="suggestion-chip" data-q="How do I register to vote in India?">How to register to vote?</button>
+                <button class="suggestion-chip" data-q="What is NOTA and how does it work?">What is NOTA?</button>
+                <button class="suggestion-chip" data-q="What documents do I need to vote?">Documents needed to vote?</button>
+                <button class="suggestion-chip" data-q="How does an EVM work?">How does EVM work?</button>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+                <input type="text" id="chat-input" placeholder="Type your question about elections..." autocomplete="off">
+                <button id="send-btn" class="send-btn" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <p class="chat-disclaimer">Powered by Gemini AI • Responses are for educational purposes only</p>
+        </div>
+    </main>
+
+
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="chatbot.js"></script>
+</body>
+</html>

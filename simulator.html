@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Simulator | SmartVote India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning.html">Learn</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+                <li><a href="simulator.html" class="active">Simulator</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li id="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <span id="user-name">User</span>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html">Dashboard</a>
+                            <a href="javascript:void(0)" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="simulator-main container">
+        <div class="simulator-header">
+            <h1>Mock Voting Simulator</h1>
+            <p>Experience how an Electronic Voting Machine (EVM) works. Your vote here is purely for educational simulation and will not be recorded anywhere.</p>
+        </div>
+
+        <div class="evm-container" id="evm-machine">
+            <!-- Left Side: Display panel -->
+            <div class="evm-display">
+                <div class="evm-status" id="evm-status">READY</div>
+                <div class="evm-instructions">Select a candidate and press VOTE</div>
+            </div>
+
+            <!-- Right Side: Ballot Unit -->
+            <div class="ballot-unit">
+                <div class="ballot-header">
+                    <div class="ballot-title">BALLOT UNIT</div>
+                </div>
+                
+                <div class="candidate-list" id="candidate-list">
+                    <!-- Candidates injected here by JS -->
+                </div>
+                
+                <!-- Bottom controls -->
+                <div class="ballot-controls">
+                    <button id="cast-vote-btn" class="cast-vote-btn" disabled>CAST VOTE</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="vote-confirmation" class="vote-confirmation" style="display: none;">
+            <div class="confirm-icon">✓</div>
+            <h2>Vote Recorded</h2>
+            <p>Your vote has been successfully simulated.</p>
+            <div class="sim-note">Note: This is only a simulation. Be sure to vote in real elections!</div>
+            <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+            <a href="learning.html" class="btn btn-outline" style="margin-left: 10px;">Return to Modules</a>
+        </div>
+    </main>
+
+
+    <script src="main.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="simulator.js"></script>
+</body>
+</html>

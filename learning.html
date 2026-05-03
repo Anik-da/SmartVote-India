@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Modules | SmartVote India</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="learning-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">VoteSmart <span>India</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning.html" class="active">Learn</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li id="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <span id="user-name">User</span>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html">Dashboard</a>
+                            <a href="javascript:void(0)" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="learning-header">
+            <h1>Electoral <span>Learning Modules</span></h1>
+            <p>Master the democratic process through our curated interactive modules.</p>
+        </header>
+
+        <!-- Modules Grid -->
+        <div id="modules-grid" class="modules-grid">
+            <!-- Shimmer/Loading state -->
+            <div class="shimmer-card"></div>
+            <div class="shimmer-card"></div>
+            <div class="shimmer-card"></div>
+            <div class="shimmer-card"></div>
+        </div>
+    </main>
+
+    <!-- Content View Modal -->
+    <div id="module-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div id="module-progress-container" class="modal-progress-bar">
+                    <div id="modal-progress" class="progress-fill"></div>
+                </div>
+                <div class="content-header">
+                    <h2 id="current-title">Module Title</h2>
+                    <p id="current-step-label">Step 1 of 5</p>
+                </div>
+                <div class="content-area">
+                    <div class="content-image">
+                        <img id="current-image" src="" alt="Module Content" class="img-backing">
+                    </div>
+                    <div class="content-text">
+                        <p id="current-text">Loading content...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="prev-btn" class="btn btn-outline" disabled>Previous</button>
+                    <button id="next-btn" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="learning.js"></script>
+</body>
+</html>

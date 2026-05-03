@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | SmartVote India</title>
+    <meta name="description" content="Test your knowledge of Indian elections and voting procedures.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="quiz-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="learning.html">Learn</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+                <li><a href="quiz.html" class="active">Quiz</a></li>
+                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li id="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <span id="user-name">User</span>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html">Dashboard</a>
+                            <a href="javascript:void(0)" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container quiz-main">
+        <div class="quiz-container">
+            
+            <!-- Loading State -->
+            <div id="quiz-loading" class="quiz-state-view active">
+                <div class="loading-spinner"></div>
+                <p>Loading Quiz Questions...</p>
+            </div>
+
+            <!-- Quiz Setup Error / Empty -->
+            <div id="quiz-error" class="quiz-state-view" style="display: none;">
+                <h2>Oops!</h2>
+                <p>We couldn't load the quiz questions right now.</p>
+                <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+            </div>
+
+            <!-- Active Quiz -->
+            <div id="quiz-active" class="quiz-state-view" style="display: none;">
+                <div class="quiz-header">
+                    <div class="quiz-progress-wrapper">
+                        <div class="quiz-progress-bar">
+                            <div id="quiz-progress-fill" class="quiz-progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <span id="quiz-counter">Question 1 of 5</span>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <h2 id="quiz-question" class="quiz-question">Loading Question...</h2>
+                    <div id="quiz-options" class="quiz-options">
+                        <!-- Options injected via JS -->
+                    </div>
+                </div>
+
+                <div class="quiz-footer">
+                    <button id="quiz-next-btn" class="btn btn-primary" disabled>Next Question</button>
+                </div>
+            </div>
+
+            <!-- Quiz Results -->
+            <div id="quiz-results" class="quiz-state-view" style="display: none;">
+                <div class="results-card">
+                    <div class="results-icon">🎯</div>
+                    <h2>Quiz Completed!</h2>
+                    <p class="results-score">You scored <span id="final-score">0</span> out of <span id="total-questions">0</span></p>
+                    <p id="results-message" class="results-message">Great job completing the quiz!</p>
+                    
+                    <div id="auth-prompt" class="auth-prompt" style="display: none;">
+                        <p>Log in to save your score and earn badges!</p>
+                        <button class="btn btn-outline" id="results-login-btn">Login / Sign Up</button>
+                    </div>
+
+                    <div class="results-actions">
+                        <button id="retake-btn" class="btn btn-outline">Retake Quiz</button>
+                        <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="quiz.js"></script>
+</body>
+</html>

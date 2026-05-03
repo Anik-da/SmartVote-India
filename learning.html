@@ -15,13 +15,15 @@
         <div class="container">
             <a href="index.html" class="logo">VoteSmart <span>India</span></a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning.html" class="active">Learn</a></li>
-                <li><a href="chatbot.html">AI Assistant</a></li>
-                <li><a href="simulator.html">Simulator</a></li>
-                <li><a href="fakenews.html">Fake News</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li><a href="index.html" data-translate>Home</a></li>
+                <li><a href="learning.html" class="active" data-translate>Learn</a></li>
+                <li><a href="quiz.html" data-translate>Quiz</a></li>
+                <li><a href="chatbot.html" data-translate>AI Assistant</a></li>
+                <li><a href="simulator.html" data-translate>Simulator</a></li>
+                <li><a href="fakenews.html" data-translate>Fake News</a></li>
+                <li><a href="dashboard.html" data-translate>Dashboard</a></li>
+                <li><button class="lang-toggle" id="lang-toggle-btn" title="हिंदी में बदलें">🌐 हि</button></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn" data-translate>Login</a></li>
                 <li id="user-profile" style="display: none;">
                     <div class="user-dropdown">
                         <span id="user-name">User</span>
@@ -37,8 +39,8 @@
 
     <main class="container">
         <header class="learning-header">
-            <h1>Electoral <span>Learning Modules</span></h1>
-            <p>Master the democratic process through our curated interactive modules.</p>
+            <h1 data-translate>Electoral <span data-translate>Learning Modules</span></h1>
+            <p data-translate>Master the democratic process through our curated interactive modules.</p>
         </header>
 
         <!-- Modules Grid -->
@@ -82,5 +84,6 @@
 
     <script type="module" src="auth.js"></script>
     <script type="module" src="learning.js"></script>
+    <script type="module" src="translate.js"></script>
 </body>
 </html>

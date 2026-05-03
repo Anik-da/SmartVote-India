@@ -1,4 +1,6 @@
-import { analyzeNews } from './ai-service.js';
+import { analyzeNews, validateInput } from './ai-service.js';
+
+const MAX_INPUT_LENGTH = 500; // Slightly higher for news articles
 
 document.addEventListener('DOMContentLoaded', () => {
     const analyzeBtn = document.getElementById('analyze-btn');
@@ -15,10 +17,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const fakeDesc = document.getElementById('fake-desc');
     const fakeRealBox = document.getElementById('fake-real-box');
 
+    // ─── Character Counter ──────────────────────────────────────────
+    const charCounter = document.createElement('div');
+    charCounter.className = 'char-counter';
+    charCounter.textContent = `0 / ${MAX_INPUT_LENGTH}`;
+    newsInput.parentNode.insertBefore(charCounter, newsInput.nextSibling);
+
+    newsInput.addEventListener('input', () => {
+        const len = newsInput.value.length;
+        charCounter.textContent = `${len} / ${MAX_INPUT_LENGTH}`;
+        if (len > MAX_INPUT_LENGTH) {
+            charCounter.classList.add('over-limit');
+        } else {
+            charCounter.classList.remove('over-limit');
+        }
+    });
+
+    // ─── Inline Alert ───────────────────────────────────────────────
+    function showInlineAlert(message, type = 'error') {
+        const existing = document.querySelector('.inline-alert');
+        if (existing) existing.remove();
+
+        const alert = document.createElement('div');
+        alert.className = `inline-alert inline-alert-${type}`;
+        alert.innerHTML = `
+            <span class="inline-alert-icon">${type === 'error' ? '⚠️' : '💡'}</span>
+            <span class="inline-alert-text">${message}</span>
+            <button class="inline-alert-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        
+        newsInput.parentNode.insertBefore(alert, newsInput);
+
+        setTimeout(() => {
+            if (alert.parentNode) alert.remove();
+        }, 5000);
+    }
+
     analyzeBtn.addEventListener('click', async () => {
         const text = newsInput.value.trim();
-        if (!text) {
-            alert("Please enter some text to analyze.");
+        
+        // Input validation
+        const validation = validateInput(text, MAX_INPUT_LENGTH);
+        if (!validation.valid) {
+            showInlineAlert(validation.error, 'warning');
             return;
         }
 
@@ -35,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("Error analyzing text:", error);
-            alert("An error occurred during analysis. Please try again.");
+            showInlineAlert(error.message || 'An error occurred during analysis. Please try again.', 'error');
         } finally {
             // Restore UI state
             loadingIndicator.style.display = 'none';
@@ -46,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
         newsInput.value = '';
         resultCard.style.display = 'none';
+        charCounter.textContent = `0 / ${MAX_INPUT_LENGTH}`;
         newsInput.focus();
     });
 

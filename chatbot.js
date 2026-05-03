@@ -1,4 +1,4 @@
-import { sendMessageToGemini } from './ai-service.js';
+import { sendMessageToGemini, validateInput } from './ai-service.js';
 
 const SYSTEM_PROMPT = `You are "Election Assistant", an AI-powered chatbot for SmartVote India — an electoral education platform. Your role is to help Indian citizens understand elections, voting procedures, and democratic rights.
 
@@ -12,6 +12,8 @@ Rules:
 - Format responses with bullet points or numbered lists when appropriate.
 - Keep responses under 200 words unless the topic requires more detail.`;
 
+const MAX_INPUT_LENGTH = 300;
+
 document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
@@ -20,6 +22,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestedQuestions = document.getElementById('suggested-questions');
 
     let conversationHistory = [];
+
+    // ─── Character Counter ──────────────────────────────────────────
+    const charCounter = document.createElement('div');
+    charCounter.className = 'char-counter';
+    charCounter.id = 'char-counter';
+    charCounter.textContent = `0 / ${MAX_INPUT_LENGTH}`;
+    chatInput.parentNode.insertBefore(charCounter, chatInput.nextSibling);
+
+    chatInput.addEventListener('input', () => {
+        const len = chatInput.value.length;
+        charCounter.textContent = `${len} / ${MAX_INPUT_LENGTH}`;
+        if (len > MAX_INPUT_LENGTH) {
+            charCounter.classList.add('over-limit');
+            sendBtn.disabled = true;
+        } else {
+            charCounter.classList.remove('over-limit');
+            sendBtn.disabled = false;
+        }
+    });
+
+    // Set maxlength attribute as a hard stop
+    chatInput.setAttribute('maxlength', MAX_INPUT_LENGTH + 10); // slight buffer for paste
 
     // Hamburger menu
     const hamburger = document.getElementById('hamburger');
@@ -43,7 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Send message
     function sendMessage() {
         const text = chatInput.value.trim();
-        if (!text) return;
+        
+        // Input validation
+        const validation = validateInput(text, MAX_INPUT_LENGTH);
+        if (!validation.valid) {
+            showInlineAlert(validation.error, 'warning');
+            return;
+        }
 
         // Hide suggestions after first message
         if (suggestedQuestions) {
@@ -52,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         appendMessage(text, 'user');
         chatInput.value = '';
+        charCounter.textContent = `0 / ${MAX_INPUT_LENGTH}`;
         chatInput.focus();
 
         // Show typing indicator
@@ -65,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             chatStatus.textContent = 'Online — Ask me anything about elections';
         }).catch(error => {
             removeTypingIndicator(typingEl);
+            // Show styled error alert instead of generic message
+            showInlineAlert(error.message || 'An unexpected error occurred.', 'error');
             appendMessage('Sorry, I encountered an error. Please try again. 🙏', 'bot');
             chatStatus.textContent = 'Online — Ask me anything about elections';
             console.error('Gemini API Error:', error);
@@ -86,6 +119,30 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage();
         });
     });
+
+    // ─── Inline Alert ───────────────────────────────────────────────
+    function showInlineAlert(message, type = 'error') {
+        // Remove existing alerts
+        const existing = document.querySelector('.inline-alert');
+        if (existing) existing.remove();
+
+        const alert = document.createElement('div');
+        alert.className = `inline-alert inline-alert-${type}`;
+        alert.innerHTML = `
+            <span class="inline-alert-icon">${type === 'error' ? '⚠️' : '💡'}</span>
+            <span class="inline-alert-text">${escapeHTML(message)}</span>
+            <button class="inline-alert-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        
+        // Insert before the chat input area
+        const inputArea = chatInput.closest('.chat-input-area') || chatInput.parentNode;
+        inputArea.parentNode.insertBefore(alert, inputArea);
+
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            if (alert.parentNode) alert.remove();
+        }, 5000);
+    }
 
     // Append message to chat
     function appendMessage(text, sender) {

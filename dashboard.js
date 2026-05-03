@@ -159,6 +159,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 bar.style.width = bar.dataset.target + '%';
             });
         }, 200);
+
+        // ─── Election Readiness Score ───────────────────────────────
+        const quizScore = parseInt(progress.quizScore) || 0;
+        calculateAndDisplayReadiness(quizScore, completedCount);
+    }
+
+    /**
+     * Calculates and displays the Election Readiness Score.
+     * Formula: readiness = quizScore + (modulesCompleted * 10), capped at 100
+     */
+    function calculateAndDisplayReadiness(quizScore, modulesCompleted) {
+        const raw = quizScore + (modulesCompleted * 10);
+        const readiness = Math.min(raw, 100);
+
+        // Update breakdown values
+        const rbQuiz = document.getElementById('rb-quiz');
+        const rbModules = document.getElementById('rb-modules');
+        const rbReadiness = document.getElementById('rb-readiness');
+        const readinessPercent = document.getElementById('readiness-percent');
+        const readinessMessage = document.getElementById('readiness-message');
+
+        if (rbQuiz) rbQuiz.textContent = `${quizScore}%`;
+        if (rbModules) rbModules.textContent = modulesCompleted;
+        if (rbReadiness) rbReadiness.textContent = `${readiness}%`;
+
+        // Tier messages
+        let message = '';
+        if (readiness >= 90) {
+            message = '🎉 Outstanding! You\'re fully ready to vote smart!';
+        } else if (readiness >= 61) {
+            message = '🔥 Almost there! You\'re becoming an informed voter.';
+        } else if (readiness >= 31) {
+            message = '📈 Good progress! Keep learning to boost your score.';
+        } else {
+            message = '🚀 Start your journey! Take the quiz and complete modules.';
+        }
+
+        if (readinessMessage) readinessMessage.textContent = message;
+
+        // Animate readiness ring
+        animateReadinessRing(readiness);
+    }
+
+    function animateReadinessRing(percent) {
+        const ring = document.getElementById('readiness-ring-fill');
+        const label = document.getElementById('readiness-percent');
+        if (!ring || !label) return;
+
+        const circumference = 2 * Math.PI * 85; // r = 85
+        ring.style.strokeDasharray = `${circumference}`;
+        ring.style.strokeDashoffset = `${circumference}`;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const offset = circumference - (percent / 100) * circumference;
+                ring.style.strokeDashoffset = offset;
+                label.textContent = `${percent}%`;
+            });
+        });
     }
 
     function animateRing(percent) {

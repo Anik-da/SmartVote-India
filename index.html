@@ -18,13 +18,15 @@
                 <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
             </a>
             <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="learning.html">Learn</a></li>
-                <li><a href="chatbot.html">AI Assistant</a></li>
-                <li><a href="simulator.html">Simulator</a></li>
-                <li><a href="fakenews.html">Fake News</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li><a href="index.html" class="active" data-translate>Home</a></li>
+                <li><a href="learning.html" data-translate>Learn</a></li>
+                <li><a href="quiz.html" data-translate>Quiz</a></li>
+                <li><a href="chatbot.html" data-translate>AI Assistant</a></li>
+                <li><a href="simulator.html" data-translate>Simulator</a></li>
+                <li><a href="fakenews.html" data-translate>Fake News</a></li>
+                <li><a href="dashboard.html" data-translate>Dashboard</a></li>
+                <li><button class="lang-toggle" id="lang-toggle-btn" title="हिंदी में बदलें">🌐 हि</button></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn" data-translate>Login</a></li>
                 <li id="user-profile" style="display: none;">
                     <div class="user-dropdown">
                         <span id="user-name">User</span>
@@ -47,11 +49,11 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content glass-card" style="padding: 2.5rem; border-radius: 2rem;">
-                <h1 class="reveal">Understand Elections. <span>Vote Smart.</span></h1>
-                <p class="reveal">Learn the election process, verify information, and become a responsible voter in the world's largest democracy.</p>
+                <h1 class="reveal" data-translate>Understand Elections. <span data-translate>Vote Smart.</span></h1>
+                <p class="reveal" data-translate>Learn the election process, verify information, and become a responsible voter in the world's largest democracy.</p>
                 <div class="hero-btns reveal">
-                    <a href="learning.html" class="btn btn-primary">Start Learning</a>
-                    <a href="simulator.html" class="btn btn-outline">Try Simulator</a>
+                    <a href="learning.html" class="btn btn-primary" data-translate>Start Learning</a>
+                    <a href="simulator.html" class="btn btn-outline" data-translate>Try Simulator</a>
                 </div>
             </div>
             <div class="hero-image reveal">
@@ -64,30 +66,30 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2>Why VoteSmart?</h2>
-                <p>Empowering citizens with knowledge and tools for an informed democracy.</p>
+                <h2 data-translate>Why VoteSmart?</h2>
+                <p data-translate>Empowering citizens with knowledge and tools for an informed democracy.</p>
             </div>
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <img src="assets/learning.png" alt="Interactive Learning" class="img-backing">
                     </div>
-                    <h3>Interactive Learning</h3>
-                    <p>Engaging modules to understand the complexities of the Indian electoral system easily.</p>
+                    <h3 data-translate>Interactive Learning</h3>
+                    <p data-translate>Engaging modules to understand the complexities of the Indian electoral system easily.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <img src="assets/ai-assistant.png" alt="AI Election Assistant" class="img-backing">
                     </div>
-                    <h3>AI Election Assistant</h3>
-                    <p>Get instant answers to your questions about candidates, constituencies, and procedures.</p>
+                    <h3 data-translate>AI Election Assistant</h3>
+                    <p data-translate>Get instant answers to your questions about candidates, constituencies, and procedures.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <img src="assets/fake-news.png" alt="Fake News Detection" class="img-backing">
                     </div>
-                    <h3>Fake News Detection</h3>
-                    <p>Fact-check claims and identify misinformation before it affects your voting decision.</p>
+                    <h3 data-translate>Fake News Detection</h3>
+                    <p data-translate>Fact-check claims and identify misinformation before it affects your voting decision.</p>
                 </div>
             </div>
         </div>
@@ -97,8 +99,8 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-header">
-                <h2>How It Works</h2>
-                <p>Three simple steps to becoming a smart voter.</p>
+                <h2 data-translate>How It Works</h2>
+                <p data-translate>Three simple steps to becoming a smart voter.</p>
             </div>
             <div class="steps-grid">
                 <div class="step">
@@ -158,5 +160,6 @@
 
     <script src="main.js"></script>
     <script type="module" src="auth.js"></script>
+    <script type="module" src="translate.js"></script>
 </body>
 </html>

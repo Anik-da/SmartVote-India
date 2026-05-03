@@ -16,6 +16,48 @@ function getClient() {
 }
 
 /**
+ * Validates and sanitizes user input before sending to API.
+ * @param {string} text - The raw user input.
+ * @param {number} maxLength - Maximum allowed characters.
+ * @returns {{ valid: boolean, sanitized: string, error: string|null }}
+ */
+export function validateInput(text, maxLength = 300) {
+    if (!text || text.trim().length === 0) {
+        return { valid: false, sanitized: '', error: 'Input cannot be empty.' };
+    }
+    const sanitized = text.trim();
+    if (sanitized.length > maxLength) {
+        return { valid: false, sanitized: '', error: `Input exceeds ${maxLength} character limit. Currently: ${sanitized.length} characters.` };
+    }
+    return { valid: true, sanitized, error: null };
+}
+
+/**
+ * Classifies API errors into user-friendly categories.
+ * @param {Error} error - The original error.
+ * @returns {string} - User-friendly error message.
+ */
+function classifyError(error) {
+    const msg = error.message || '';
+    if (msg.includes('403') || msg.includes('PERMISSION_DENIED')) {
+        return 'API Key Error: Your key may be blocked or invalid. Please check config.js.';
+    }
+    if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) {
+        return 'Rate limit reached. Please wait a moment and try again.';
+    }
+    if (msg.includes('404') || msg.includes('NOT_FOUND')) {
+        return 'AI model not found. The model may have been deprecated. Please update config.js.';
+    }
+    if (msg.includes('400') || msg.includes('INVALID_ARGUMENT')) {
+        return 'Invalid request. Please try rephrasing your message.';
+    }
+    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        return 'Network error. Please check your internet connection and try again.';
+    }
+    return 'Sorry, an unexpected error occurred. Please try again. 🙏';
+}
+
+/**
  * Sends a message to Gemini and returns the AI response.
  * @param {string} userMessage - The message from the user.
  * @param {string} systemPrompt - The system instruction for the AI.
@@ -23,6 +65,12 @@ function getClient() {
  * @returns {Promise<string>} - The AI response text.
  */
 export async function sendMessageToGemini(userMessage, systemPrompt, history = []) {
+    // Validate input before sending
+    const validation = validateInput(userMessage);
+    if (!validation.valid) {
+        throw new Error(validation.error);
+    }
+
     try {
         const ai = getClient();
         
@@ -40,7 +88,7 @@ export async function sendMessageToGemini(userMessage, systemPrompt, history = [
             ...history.slice(-10),
             {
                 role: 'user',
-                parts: [{ text: userMessage }]
+                parts: [{ text: validation.sanitized }]
             }
         ];
 
@@ -62,11 +110,11 @@ export async function sendMessageToGemini(userMessage, systemPrompt, history = [
     } catch (error) {
         console.error("AI Service Error:", error);
         
-        if (error.message.includes('403') || error.message.includes('leaked')) {
-            throw new Error("API Key Error: Your key may be blocked or leaked. Please update config.js with a new key.");
-        }
-        
-        throw error;
+        // Re-throw with user-friendly message
+        const friendlyMessage = classifyError(error);
+        const enhancedError = new Error(friendlyMessage);
+        enhancedError.originalError = error;
+        throw enhancedError;
     }
 }
 
@@ -76,9 +124,15 @@ export async function sendMessageToGemini(userMessage, systemPrompt, history = [
  * @returns {Promise<Object>} - Analysis results.
  */
 export async function analyzeNews(text) {
+    // Validate input
+    const validation = validateInput(text, 500); // Slightly higher limit for news
+    if (!validation.valid) {
+        throw new Error(validation.error);
+    }
+
     const prompt = `Analyze the following news article or claim for sentiment, emotional intensity (magnitude), and potential sensationalism/bias.
     
-    Text: "${text}"
+    Text: "${validation.sanitized}"
     
     You MUST return ONLY a valid JSON object with these exact fields, no other text:
     {
@@ -115,7 +169,7 @@ export async function analyzeNews(text) {
             magnitude: 0,
             isSensational: false,
             verdict: "Check Manually",
-            description: "The AI analysis encountered an error. Please evaluate the content carefully based on its sources."
+            description: classifyError(error)
         };
     }
 }

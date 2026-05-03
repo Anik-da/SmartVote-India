@@ -18,13 +18,15 @@
                 <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
             </a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning.html">Learn</a></li>
-                <li><a href="chatbot.html" class="active">AI Assistant</a></li>
-                <li><a href="simulator.html">Simulator</a></li>
-                <li><a href="fakenews.html">Fake News</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="javascript:void(0)" class="btn-login" id="login-btn">Login</a></li>
+                <li><a href="index.html" data-translate>Home</a></li>
+                <li><a href="learning.html" data-translate>Learn</a></li>
+                <li><a href="quiz.html" data-translate>Quiz</a></li>
+                <li><a href="chatbot.html" class="active" data-translate>AI Assistant</a></li>
+                <li><a href="simulator.html" data-translate>Simulator</a></li>
+                <li><a href="fakenews.html" data-translate>Fake News</a></li>
+                <li><a href="dashboard.html" data-translate>Dashboard</a></li>
+                <li><button class="lang-toggle" id="lang-toggle-btn" title="हिंदी में बदलें">🌐 हि</button></li>
+                <li><a href="javascript:void(0)" class="btn-login" id="login-btn" data-translate>Login</a></li>
                 <li id="user-profile" style="display: none;">
                     <div class="user-dropdown">
                         <span id="user-name">User</span>
@@ -101,5 +103,6 @@
 
     <script type="module" src="auth.js"></script>
     <script type="module" src="chatbot.js"></script>
+    <script type="module" src="translate.js"></script>
 </body>
 </html>

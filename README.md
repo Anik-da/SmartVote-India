@@ -19,7 +19,7 @@ SmartVote India is a comprehensive web platform designed to educate citizens abo
 
 ## 🚀 Live Demo
 
-Live URL: [https://smart-maintenance-494503.web.app](https://smart-maintenance-494503.web.app)
+Live URL: (https://election-262a7.web.app/)
 
 ## 💻 Running Locally
 

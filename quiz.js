@@ -1,4 +1,5 @@
 import { saveQuizScore, fetchQuizQuestions, seedCollectionIfEmpty } from './firebase-service.js';
+import { translateText, getCurrentLanguage } from './translate.js';
 
 const DEFAULT_QUESTIONS = [
     {
@@ -118,34 +119,39 @@ document.addEventListener('DOMContentLoaded', () => {
         renderQuestion();
     }
 
-    function renderQuestion() {
+    async function renderQuestion() {
+        const lang = getCurrentLanguage();
         selectedOptionIndex = null;
         ui.nextBtn.disabled = true;
-        ui.nextBtn.textContent = "Next Question";
+        ui.nextBtn.textContent = await translateText("Next Question", lang);
         
         const q = questions[currentQuestionIndex];
         
         // Update Progress
         const percent = (currentQuestionIndex / questions.length) * 100;
         ui.progressFill.style.width = `${percent}%`;
-        ui.counter.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+        
+        const qWord = await translateText("Question", lang);
+        const ofWord = await translateText("of", lang);
+        ui.counter.textContent = `${qWord} ${currentQuestionIndex + 1} ${ofWord} ${questions.length}`;
 
         // Render Question & Options
-        ui.questionText.textContent = q.question;
+        ui.questionText.textContent = await translateText(q.question, lang);
         ui.optionsContainer.innerHTML = '';
 
-        q.options.forEach((optText, index) => {
+        for (let i = 0; i < q.options.length; i++) {
+            const optText = q.options[i];
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.textContent = optText;
-            btn.addEventListener('click', () => handleOptionClick(btn, index));
+            btn.textContent = await translateText(optText, lang);
+            btn.addEventListener('click', () => handleOptionClick(btn, i));
             ui.optionsContainer.appendChild(btn);
-        });
+        }
     }
 
     function handleOptionClick(btn, index) {
         // If already selected and checking, do nothing
-        if (ui.nextBtn.textContent === "Checking...") return;
+        if (ui.nextBtn.textContent === "Checking..." || ui.nextBtn.classList.contains('checking')) return;
         
         // Remove 'selected' from all
         document.querySelectorAll('.option-btn').forEach(el => el.classList.remove('selected'));
@@ -159,13 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleNextClick() {
         if (selectedOptionIndex === null) return;
         
+        const lang = getCurrentLanguage();
         const q = questions[currentQuestionIndex];
         const options = document.querySelectorAll('.option-btn');
         const selectedBtn = options[selectedOptionIndex];
         
         // Temporarily disable buttons to show correct/incorrect
         ui.nextBtn.disabled = true;
-        ui.nextBtn.textContent = "Checking...";
+        ui.nextBtn.classList.add('checking');
+        ui.nextBtn.textContent = await translateText("Checking...", lang);
         options.forEach(btn => btn.style.pointerEvents = 'none');
 
         // Reveal logic
@@ -178,10 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Wait a moment then proceed
-        setTimeout(() => {
+        setTimeout(async () => {
             currentQuestionIndex++;
+            ui.nextBtn.classList.remove('checking');
             if (currentQuestionIndex < questions.length) {
-                renderQuestion();
+                await renderQuestion();
             } else {
                 finishQuiz();
             }

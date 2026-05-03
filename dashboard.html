@@ -18,11 +18,11 @@
                 <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
             </a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning.html">Learn</a></li>
-                <li><a href="chatbot.html">AI Assistant</a></li>
-                <li><a href="simulator.html">Simulator</a></li>
-                <li><a href="fakenews.html">Fake News</a></li>
+                <li><a href="index.html" data-translate>Home</a></li>
+                <li><a href="learning.html" data-translate>Learn</a></li>
+                <li><a href="chatbot.html" data-translate>AI Assistant</a></li>
+                <li><a href="simulator.html" data-translate>Simulator</a></li>
+                <li><a href="fakenews.html" data-translate>Fake News</a></li>
                 <li><a href="dashboard.html" class="active" data-translate>Dashboard</a></li>
                 <li><button class="lang-toggle" id="lang-toggle-btn" title="हिंदी में बदलें">🌐 हि</button></li>
                 <li><a href="javascript:void(0)" class="btn-login" id="login-btn" data-translate>Login</a></li>
@@ -50,16 +50,16 @@
         <div id="dashboard-auth-gate" class="dashboard-auth-gate" style="display: none;">
             <div class="auth-gate-content">
                 <div class="auth-gate-icon">🔒</div>
-                <h2>Sign In to View Your Dashboard</h2>
-                <p>Track your learning progress, earn badges, and see your stats by signing in.</p>
-                <button class="btn btn-primary" id="gate-login-btn">Login / Sign Up</button>
+                <h2 data-translate>Sign In to View Your Dashboard</h2>
+                <p data-translate>Track your learning progress, earn badges, and see your stats by signing in.</p>
+                <button class="btn btn-primary" id="gate-login-btn" data-translate>Login / Sign Up</button>
             </div>
         </div>
 
         <!-- Loading State -->
         <div id="dashboard-loading" class="dashboard-loading">
             <div class="loading-spinner"></div>
-            <p>Loading your dashboard...</p>
+            <p data-translate>Loading your dashboard...</p>
         </div>
 
         <!-- Dashboard Main (hidden until auth + data load) -->
@@ -148,7 +148,7 @@
             <!-- Progress Overview Ring + Module List -->
             <section class="dash-progress-section">
                 <div class="dash-ring-card">
-                    <h3>Overall Completion</h3>
+                    <h3 data-translate>Overall Completion</h3>
                     <div class="progress-ring-container">
                         <svg class="progress-ring" width="180" height="180">
                             <circle class="progress-ring-bg" cx="90" cy="90" r="78" />
@@ -156,33 +156,33 @@
                         </svg>
                         <div class="ring-label" id="ring-label">0%</div>
                     </div>
-                    <p class="ring-subtitle">Keep going — every step counts!</p>
+                    <p class="ring-subtitle" data-translate>Keep going — every step counts!</p>
                 </div>
 
                 <div class="dash-modules-card">
-                    <h3>Module Progress</h3>
+                    <h3 data-translate>Module Progress</h3>
                     <div id="module-progress-list" class="module-progress-list">
                         <!-- Filled dynamically -->
                     </div>
-                    <a href="learning.html" class="btn btn-primary btn-sm dash-cta">Continue Learning →</a>
+                    <a href="learning.html" class="btn btn-primary btn-sm dash-cta" data-translate>Continue Learning →</a>
                 </div>
             </section>
 
             <!-- Recent Activity -->
             <section class="dash-activity-section">
-                <h3>Account Info</h3>
+                <h3 data-translate>Account Info</h3>
                 <div class="activity-list" id="activity-list">
                     <div class="activity-item">
                         <span class="activity-icon">📅</span>
                         <div class="activity-text">
-                            <strong>Member Since</strong>
+                            <strong data-translate>Member Since</strong>
                             <p id="dash-joined">—</p>
                         </div>
                     </div>
                     <div class="activity-item">
                         <span class="activity-icon">✉️</span>
                         <div class="activity-text">
-                            <strong>Email</strong>
+                            <strong data-translate>Email</strong>
                             <p id="dash-email-2">—</p>
                         </div>
                     </div>
@@ -203,25 +203,25 @@
                 </div>
                 <div class="footer-links">
                     <div class="link-group">
-                        <h4>Platform</h4>
+                        <h4 data-translate>Platform</h4>
                         <ul>
-                            <li><a href="learning.html">Learn</a></li>
-                            <li><a href="#quiz">Quiz</a></li>
-                            <li><a href="#simulator">Simulator</a></li>
+                            <li><a href="learning.html" data-translate>Learn</a></li>
+                            <li><a href="quiz.html" data-translate>Quiz</a></li>
+                            <li><a href="simulator.html" data-translate>Simulator</a></li>
                         </ul>
                     </div>
                     <div class="link-group">
-                        <h4>Company</h4>
+                        <h4 data-translate>Company</h4>
                         <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#" data-translate>About</a></li>
+                            <li><a href="#" data-translate>Contact</a></li>
+                            <li><a href="#" data-translate>Privacy Policy</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 VoteSmart India. All rights reserved. Built with pride for democracy.</p>
+                <p data-translate>&copy; 2026 VoteSmart India. All rights reserved. Built with pride for democracy.</p>
             </div>
         </div>
     </footer>

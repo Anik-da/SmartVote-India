@@ -1,4 +1,5 @@
 import { sendMessageToGemini, validateInput } from './ai-service.js';
+import { getCurrentLanguage } from './translate.js';
 
 const SYSTEM_PROMPT = `You are "Election Assistant", an AI-powered chatbot for SmartVote India — an electoral education platform. Your role is to help Indian citizens understand elections, voting procedures, and democratic rights.
 
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatStatus.textContent = 'Typing...';
 
         // Call Gemini API via service
-        sendMessageToGemini(text, SYSTEM_PROMPT, conversationHistory).then(response => {
+        sendMessageToGemini(text, SYSTEM_PROMPT, conversationHistory, getCurrentLanguage()).then(response => {
             removeTypingIndicator(typingEl);
             appendMessage(response, 'bot');
             chatStatus.textContent = 'Online — Ask me anything about elections';

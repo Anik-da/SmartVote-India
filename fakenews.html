@@ -48,8 +48,8 @@
 
     <div class="page-header">
         <div class="container">
-            <h1>Fake News <span>Detection</span></h1>
-            <p>Paste an article or snippet to analyze its sentiment and identify potential sensationalism.</p>
+            <h1 data-translate>Fake News <span data-translate>Detection</span></h1>
+            <p data-translate>Paste an article or snippet to analyze its sentiment and identify potential sensationalism.</p>
         </div>
     </div>
 
@@ -57,36 +57,36 @@
         <div class="container">
             <div class="fakenews-container">
                 <div class="input-card">
-                    <h2>Text Analysis</h2>
-                    <p>Enter the text you want to analyze below.</p>
-                    <textarea id="news-input" placeholder="Paste news article or claim here..." rows="8"></textarea>
-                    <button id="analyze-btn" class="btn btn-primary btn-block">Analyze</button>
+                    <h2 data-translate>Text Analysis</h2>
+                    <p data-translate>Enter the text you want to analyze below.</p>
+                    <textarea id="news-input" placeholder="Paste news article or claim here..." rows="8" data-translate></textarea>
+                    <button id="analyze-btn" class="btn btn-primary btn-block" data-translate>Analyze</button>
                     <div id="loading-indicator" class="loading-indicator" style="display: none;">
                         <div class="spinner"></div>
-                        <p>Analyzing text with Google Cloud AI...</p>
+                        <p data-translate>Analyzing text with Google Cloud AI...</p>
                     </div>
                 </div>
 
                 <div id="result-card" class="result-card" style="display: none;">
-                    <h2>Analysis Results</h2>
+                    <h2 data-translate>Analysis Results</h2>
                     <div class="result-grid">
                         <div class="result-box">
-                            <div class="result-label">Sentiment</div>
+                            <div class="result-label" data-translate>Sentiment</div>
                             <div id="sentiment-value" class="result-value">--</div>
-                            <div id="sentiment-desc" class="result-desc">Determining tone...</div>
+                            <div id="sentiment-desc" class="result-desc" data-translate>Determining tone...</div>
                         </div>
                         <div class="result-box">
-                            <div class="result-label">Magnitude</div>
+                            <div class="result-label" data-translate>Magnitude</div>
                             <div id="magnitude-value" class="result-value">--</div>
-                            <div id="magnitude-desc" class="result-desc">Emotional strength...</div>
+                            <div id="magnitude-desc" class="result-desc" data-translate>Emotional strength...</div>
                         </div>
                         <div class="result-box full-width fake-real-indicator" id="fake-real-box">
-                            <div class="result-label">Potential Sensationalism</div>
-                            <div id="fake-indicator" class="result-value">Analyzing...</div>
-                            <div id="fake-desc" class="result-desc">Checking for extreme sentiment common in fake/sensationalized news.</div>
+                            <div class="result-label" data-translate>Potential Sensationalism</div>
+                            <div id="fake-indicator" class="result-value" data-translate>Analyzing...</div>
+                            <div id="fake-desc" class="result-desc" data-translate>Checking for extreme sentiment common in fake/sensationalized news.</div>
                         </div>
                     </div>
-                    <button id="reset-btn" class="btn btn-outline btn-block" style="margin-top: 20px;">Analyze Another</button>
+                    <button id="reset-btn" class="btn btn-outline btn-block" style="margin-top: 20px;" data-translate>Analyze Another</button>
                 </div>
             </div>
         </div>
@@ -97,29 +97,39 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-info">
-                                        <a href="index.html" class="logo">
+                    <a href="#" class="logo">
                         <span class="logo-v">Vote</span><span class="logo-s">Smart</span> <span class="logo-i">India</span>
                     </a>
-
-                    <p>Empowering the next generation of voters with technology and transparency.</p>
+                    <p data-translate>Empowering the next generation of voters with technology and transparency.</p>
                 </div>
                 <div class="footer-links">
                     <div class="link-group">
-                        <h4>Platform</h4>
+                        <h4 data-translate>Platform</h4>
                         <ul>
-                            <li><a href="learning.html">Learn</a></li>
-                            <li><a href="fakenews.html">Fake News</a></li>
-                            <li><a href="simulator.html">Simulator</a></li>
+                            <li><a href="learning.html" data-translate>Learn</a></li>
+                            <li><a href="quiz.html" data-translate>Quiz</a></li>
+                            <li><a href="simulator.html" data-translate>Simulator</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4 data-translate>Company</h4>
+                        <ul>
+                            <li><a href="#" data-translate>About</a></li>
+                            <li><a href="#" data-translate>Contact</a></li>
+                            <li><a href="#" data-translate>Privacy Policy</a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-translate>&copy; 2026 VoteSmart India. All rights reserved. Built with pride for democracy.</p>
             </div>
         </div>
     </footer>
 
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="auth.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
     <script type="module" src="fakenews.js"></script>
     <script type="module" src="translate.js"></script>
 </body>

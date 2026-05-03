@@ -1,4 +1,5 @@
 import { analyzeNews, validateInput } from './ai-service.js';
+import { getCurrentLanguage } from './translate.js';
 
 const MAX_INPUT_LENGTH = 500; // Slightly higher for news articles
 
@@ -63,16 +64,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const currentLang = getCurrentLanguage();
+
         // Show loading state
         analyzeBtn.style.display = 'none';
         loadingIndicator.style.display = 'flex';
         resultCard.style.display = 'none';
 
         try {
-            // Call Gemini AI for analysis
-            const data = await analyzeNews(text);
+            // Call Gemini AI for analysis, passing current language
+            const data = await analyzeNews(text, currentLang);
 
-            displayResults(data);
+            await displayResults(data, currentLang);
 
         } catch (error) {
             console.error("Error analyzing text:", error);
@@ -91,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         newsInput.focus();
     });
 
-    function displayResults(data) {
+    async function displayResults(data, lang) {
         const { sentiment, magnitude, isSensational, verdict, description } = data;
 
         // Sentiment Parsing
@@ -105,25 +108,32 @@ document.addEventListener('DOMContentLoaded', () => {
             sentimentColor = "#e74c3c";
         }
 
-        sentimentValue.textContent = `${sentiment.toFixed(2)} (${sentimentStr})`;
+        // Translate labels if needed
+        const displaySentiment = lang === 'hi' ? await translateText(sentimentStr, 'hi') : sentimentStr;
+        const displayVerdict = lang === 'hi' ? await translateText(verdict, 'hi') : verdict;
+        const sentimentLabel = lang === 'hi' ? await translateText("Tone of the text detected by AI.", 'hi') : "Tone of the text detected by AI.";
+        const intensityLabel = lang === 'hi' ? await translateText("Emotional intensity (0-5 scale).", 'hi') : "Emotional intensity (0-5 scale).";
+
+        sentimentValue.textContent = `${sentiment.toFixed(2)} (${displaySentiment})`;
         sentimentValue.style.color = sentimentColor;
-        sentimentDesc.textContent = "Tone of the text detected by AI.";
+        sentimentDesc.textContent = sentimentLabel;
 
         // Magnitude Parsing
         magnitudeValue.textContent = magnitude.toFixed(1);
-        magnitudeDesc.textContent = "Emotional intensity (0-5 scale).";
+        magnitudeDesc.textContent = intensityLabel;
 
         // Verdict Parsing
         let verdictColor = "#27ae60";
-        if (verdict.toLowerCase().includes("risk") || verdict.toLowerCase().includes("fake")) {
+        const vLower = verdict.toLowerCase();
+        if (vLower.includes("risk") || vLower.includes("fake")) {
             verdictColor = "#e74c3c";
-        } else if (isSensational || verdict.toLowerCase().includes("sensational")) {
+        } else if (isSensational || vLower.includes("sensational")) {
             verdictColor = "#f39c12";
         }
 
-        fakeIndicator.textContent = verdict;
+        fakeIndicator.textContent = displayVerdict;
         fakeIndicator.style.color = verdictColor;
-        fakeDesc.textContent = description;
+        fakeDesc.textContent = description; // AI already provided description in target language
         fakeRealBox.style.borderLeft = `6px solid ${verdictColor}`;
 
         // Show result with animation

@@ -209,6 +209,7 @@ h1 span {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 2rem;
 }
 
 .logo {
@@ -288,7 +289,7 @@ h1 span {
 
 .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.5rem;
     align-items: center;
 }
 

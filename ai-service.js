@@ -62,9 +62,10 @@ function classifyError(error) {
  * @param {string} userMessage - The message from the user.
  * @param {string} systemPrompt - The system instruction for the AI.
  * @param {Array} history - Previous conversation history.
+ * @param {string} language - The target language ('en' or 'hi').
  * @returns {Promise<string>} - The AI response text.
  */
-export async function sendMessageToGemini(userMessage, systemPrompt, history = []) {
+export async function sendMessageToGemini(userMessage, systemPrompt, history = [], language = 'en') {
     // Validate input before sending
     const validation = validateInput(userMessage);
     if (!validation.valid) {
@@ -74,16 +75,19 @@ export async function sendMessageToGemini(userMessage, systemPrompt, history = [
     try {
         const ai = getClient();
         
+        const langInstruction = language === 'hi' 
+            ? "\nCRITICAL: You MUST respond in Hindi (हिन्दी) only. Do not use English for the body of the response." 
+            : "\nCRITICAL: You MUST respond in English only.";
+
         // Format history for the new SDK
-        // The SDK expects { role: 'user'|'model', parts: [{ text: '...' }] }
         const contents = [
             {
                 role: 'user',
-                parts: [{ text: systemPrompt }]
+                parts: [{ text: systemPrompt + langInstruction }]
             },
             {
                 role: 'model',
-                parts: [{ text: 'Understood. I will act as the Election Assistant for SmartVote India.' }]
+                parts: [{ text: language === 'hi' ? 'समझ गया। मैं स्मार्टवोट इंडिया के लिए चुनाव सहायक के रूप में कार्य करूँगा।' : 'Understood. I will act as the Election Assistant for SmartVote India.' }]
             },
             ...history.slice(-10),
             {
@@ -121,18 +125,25 @@ export async function sendMessageToGemini(userMessage, systemPrompt, history = [
 /**
  * Analyzes a news article or claim using Gemini.
  * @param {string} text - The news text to analyze.
+ * @param {string} language - The target language ('en' or 'hi').
  * @returns {Promise<Object>} - Analysis results.
  */
-export async function analyzeNews(text) {
+export async function analyzeNews(text, language = 'en') {
     // Validate input
     const validation = validateInput(text, 500); // Slightly higher limit for news
     if (!validation.valid) {
         throw new Error(validation.error);
     }
 
+    const langInstruction = language === 'hi' 
+        ? " IMPORTANT: You MUST provide the 'description' in Hindi (हिन्दी). The 'verdict' MUST remain in English (one of: Likely Factual, Potentially Sensationalized, High Risk)." 
+        : "";
+
     const prompt = `Analyze the following news article or claim for sentiment, emotional intensity (magnitude), and potential sensationalism/bias.
     
     Text: "${validation.sanitized}"
+    
+    ${langInstruction}
     
     You MUST return ONLY a valid JSON object with these exact fields, no other text:
     {
